@@ -4,7 +4,6 @@ import com.estsoft.blogjpa.domain.Article;
 import com.estsoft.blogjpa.dto.AddArticleRequest;
 import com.estsoft.blogjpa.repository.BlogRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -103,6 +102,26 @@ class BlogControllerTest {
         assertFalse(deletedArticle.isPresent());
     }
 
-    // 코드 변경사항 가정 (테스트 코드 삭제)
+    // 코드 변경사항 가정 (테스트 코드 삭제 후 다시 추가)
+    @Test
+    public void updateArticle() throws Exception {
+        // given :
+        Article article = blogRepository.save(new Article("title", "content"));
+        Long id = article.getId();
+        AddArticleRequest request = new AddArticleRequest("updated title", "updated content");
 
+        // when : PUT /api/articles/{id}
+        ResultActions resultActions = mockMvc.perform(put("/api/articles/{id}", id)
+                .content(objectMapper.writeValueAsString(request))
+                .contentType(MediaType.APPLICATION_JSON));
+
+        // then :
+        resultActions.andExpect(status().isOk())
+                .andExpect(jsonPath("title").value(request.getTitle()))
+                .andExpect(jsonPath("content").value(request.getContent()));
+
+        Article updatedArticle = blogRepository.findById(id).orElseThrow();
+        assertThat(updatedArticle.getTitle()).isEqualTo(request.getTitle());
+        assertThat(updatedArticle.getContent()).isEqualTo(request.getContent());
+    }
 }
