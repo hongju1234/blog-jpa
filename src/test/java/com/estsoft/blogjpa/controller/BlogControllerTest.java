@@ -103,6 +103,7 @@ class BlogControllerTest {
     }
 
     // 코드 변경사항 가정 (테스트 코드 삭제 후 다시 추가)
+    // 테스트 코드 주석 추가
     @Test
     public void updateArticle() throws Exception {
         // given :
