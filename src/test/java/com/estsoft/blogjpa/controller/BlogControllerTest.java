@@ -124,5 +124,6 @@ class BlogControllerTest {
         Article updatedArticle = blogRepository.findById(id).orElseThrow();
         assertThat(updatedArticle.getTitle()).isEqualTo(request.getTitle());
         assertThat(updatedArticle.getContent()).isEqualTo(request.getContent());
+        System.out.println("123");
     }
 }
