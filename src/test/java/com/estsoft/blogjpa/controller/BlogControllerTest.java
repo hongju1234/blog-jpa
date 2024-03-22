@@ -102,7 +102,8 @@ class BlogControllerTest {
         assertFalse(deletedArticle.isPresent());
     }
 
-    // 코드 변경사항 가정 (테스트 코드 삭제 후 다시 추가)
+    // 코드 변경사항 가정 (테스트 코드 삭제 후 다시 추가) 문제
+    // 코드 한 줄 추가
     @Test
     public void updateArticle() throws Exception {
         // given :
@@ -123,5 +124,6 @@ class BlogControllerTest {
         Article updatedArticle = blogRepository.findById(id).orElseThrow();
         assertThat(updatedArticle.getTitle()).isEqualTo(request.getTitle());
         assertThat(updatedArticle.getContent()).isEqualTo(request.getContent());
+        System.out.println("hello");
     }
 }
