@@ -4,12 +4,17 @@ import com.estsoft.blogjpa.domain.Article;
 import com.estsoft.blogjpa.dto.AddArticleRequest;
 import com.estsoft.blogjpa.dto.ArticleResponse;
 import com.estsoft.blogjpa.service.BlogService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@Tag(name = "블로그 CRUD")
 @RestController // HTTP Response Body에 객체 데이터를 JSON 형식으로 반환하는 컨트롤러
 public class BlogController {
     private BlogService blogService;
@@ -28,6 +33,8 @@ public class BlogController {
 
     @RequestMapping(value = "/api/articles", method = RequestMethod.GET)
     // = @GetMappping
+    @Operation(summary = "블로그 전체 목록 보기", description = "블로그 메인 화면에서 보여주는 전체 목록")
+    @ApiResponse(responseCode = "100", description = "요청 성공", content = @Content(mediaType = "application/json"))
     public ResponseEntity<List<ArticleResponse>> showArticle() {
         List<Article> articleList = blogService.findAll();
         List<ArticleResponse> responseList = articleList.stream()
